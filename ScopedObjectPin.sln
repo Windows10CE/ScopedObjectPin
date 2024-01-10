@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScopedObjectPin", "src\ScopedObjectPin\ScopedObjectPin.csproj", "{F0585D55-EFE0-4725-841D-D5F9C1E9C352}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScopedObjectPin.IlHelpers", "src\ScopedObjectPin.IlHelpers\ScopedObjectPin.IlHelpers.ilproj", "{687893F8-FBA0-4838-9644-B86E54C2EF98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mscorlib", "src\mscorlib\mscorlib.csproj", "{2CB1F00B-86F3-4116-A18D-C50E68A1B99A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0585D55-EFE0-4725-841D-D5F9C1E9C352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0585D55-EFE0-4725-841D-D5F9C1E9C352}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0585D55-EFE0-4725-841D-D5F9C1E9C352}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0585D55-EFE0-4725-841D-D5F9C1E9C352}.Release|Any CPU.Build.0 = Release|Any CPU
+		{687893F8-FBA0-4838-9644-B86E54C2EF98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{687893F8-FBA0-4838-9644-B86E54C2EF98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB1F00B-86F3-4116-A18D-C50E68A1B99A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB1F00B-86F3-4116-A18D-C50E68A1B99A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB1F00B-86F3-4116-A18D-C50E68A1B99A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB1F00B-86F3-4116-A18D-C50E68A1B99A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

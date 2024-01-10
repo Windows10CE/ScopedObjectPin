@@ -1,0 +1,22 @@
+﻿<Project>
+    <PropertyGroup>
+        <TargetFramework>net11</TargetFramework>
+        
+        <LangVersion>12</LangVersion>
+        <RootNamespace>System</RootNamespace>
+        
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
+
+        <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+        <NoStdLib>true</NoStdLib>
+        <NoConfig>true</NoConfig>
+        
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+    
+    <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+    <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+    <Import Project="../../util/DisableResolveFramework.proj" />
+    
+</Project>
