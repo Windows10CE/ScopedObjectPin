@@ -4,6 +4,7 @@
         
         <LangVersion>12</LangVersion>
         <RootNamespace>System</RootNamespace>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         
         <AssemblyVersion>1.1.0.0</AssemblyVersion>
 

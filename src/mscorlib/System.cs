@@ -8,14 +8,23 @@ namespace System
     public struct Void;
     public struct Byte;
     public struct Int32;
-    public struct IntPtr;
+
+    public struct IntPtr
+    {
+        public static explicit operator IntPtr(int i) => throw null;
+    }
     public struct UIntPtr;
     public struct Boolean;
     public sealed class String;
     public abstract class Attribute;
+    public abstract class Array;
     
     public abstract class Delegate;
     public abstract class MulticastDelegate : Delegate;
+
+    public class Exception;
+
+    public class NullReferenceException : Exception;
 
     public sealed class AttributeUsageAttribute(AttributeTargets targets)
     {
@@ -32,6 +41,14 @@ namespace System
             public sealed class TargetFrameworkAttribute(string frameworkName) : Attribute
             {
                 public string FrameworkDisplayName { get; set; }
+            }
+        }
+
+        namespace CompilerServices
+        {
+            public static class RuntimeHelpers
+            {
+                public static int OffsetToStringData { get; }
             }
         }
     }

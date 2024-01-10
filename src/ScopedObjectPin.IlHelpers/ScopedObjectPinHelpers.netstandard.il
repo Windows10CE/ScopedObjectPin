@@ -19,6 +19,27 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
     ) runtime managed {}
     .method public hidebysig newslot virtual instance void EndInvoke (class [System.Runtime]System.IAsyncResult result) runtime managed {}
 }
+.class public auto ansi sealed ScopedObjectPin.IlHelpers.PtrAction`1<T> extends [System.Runtime]System.MulticastDelegate {
+    .method public hidebysig specialname rtspecialname instance void .ctor(class [System.Runtime]System.Object 'object', native int 'method') runtime managed {}
+    .method public hidebysig newslot virtual instance void Invoke(!T* p) runtime managed {}
+    .method public hidebysig newslot virtual instance class [System.Runtime]System.IAsyncResult BeginInvoke (
+        !T* pointer,
+        class [System.Runtime]System.AsyncCallback callback,
+        class [System.Runtime]System.Object 'object'
+    ) runtime managed {}
+    .method public hidebysig newslot virtual instance void EndInvoke (class [System.Runtime]System.IAsyncResult result) runtime managed {}
+}
+.class public auto ansi sealed ScopedObjectPin.IlHelpers.StatefulPtrAction`2<T, TState> extends [System.Runtime]System.MulticastDelegate {
+    .method public hidebysig specialname rtspecialname instance void .ctor(class [System.Runtime]System.Object 'object', native int 'method') runtime managed {}
+    .method public hidebysig newslot virtual instance void Invoke(!T* p, !TState state) runtime managed {}
+    .method public hidebysig newslot virtual instance class [System.Runtime]System.IAsyncResult BeginInvoke (
+        !T* pointer,
+        !TState state,
+        class [System.Runtime]System.AsyncCallback callback,
+        class [System.Runtime]System.Object 'object'
+    ) runtime managed {}
+    .method public hidebysig newslot virtual instance void EndInvoke (class [System.Runtime]System.IAsyncResult result) runtime managed {}
+}
 .class public auto ansi abstract sealed ScopedObjectPin.IlHelpers.Helper extends [System.Runtime]System.Object {
     .method public hidebysig static void PinObject(class [System.Runtime]System.Object o, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
         .locals (
@@ -31,6 +52,117 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
         ldloc pinnedObj
         conv.u
         callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        ret
+    }
+    .method public hidebysig static void PinObjectWithOffset(class [System.Runtime]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
+        .locals (
+            class [System.Runtime]System.Object pinned pinnedObj
+        )
+        
+        ldarg o
+        stloc pinnedObj
+        ldarg callback
+        ldloc pinnedObj
+        conv.u
+        ldarg offset
+        add
+        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        ret
+    }
+    .method public hidebysig static void PinObjectWithOffset<T>(class [System.Runtime]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction`1<!!T> callback) cil managed {
+        .locals (
+            class [System.Runtime]System.Object pinned pinnedObj
+        )
+        
+        ldarg o
+        stloc pinnedObj
+        ldarg callback
+        ldloc pinnedObj
+        conv.u
+        ldarg offset
+        add
+        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction`1::Invoke(!!T*)
+        ret
+    }
+    .method public hidebysig static void PinObjectWithOffset<T, TState>(class [System.Runtime]System.Object o, !!TState state, native int offset, class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState> callback) cil managed {
+        .locals (
+            class [System.Runtime]System.Object pinned pinnedObj
+        )
+        
+        ldarg o
+        stloc pinnedObj
+        ldarg callback
+        ldloc pinnedObj
+        conv.u
+        ldarg offset
+        add
+        ldarg state
+        callvirt instance void ScopedObjectPin.IlHelpers.StatefulPtrAction`2::Invoke(!!T*, !!TState)
+        ret
+    }
+    .method public hidebysig static void PinArray(class [System.Runtime]System.Array o, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
+        .locals (
+            class [System.Runtime]System.Array pinned pinnedObj
+        )
+        
+        ldarg o
+        stloc pinnedObj
+        ldarg callback
+        ldloc pinnedObj
+        ldc.i4.0
+        call native int [System.Runtime]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [System.Runtime]System.Array, int32)
+        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        ret
+    }
+    .method public hidebysig static void PinArray<T>(class [System.Runtime]System.Array o, class ScopedObjectPin.IlHelpers.PtrAction`1<!!T> callback) cil managed {
+        .locals (
+            class [System.Runtime]System.Array pinned pinnedObj
+        )
+        
+        ldarg o
+        stloc pinnedObj
+        ldarg callback
+        ldloc pinnedObj
+        ldc.i4.0
+        call native int [System.Runtime]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [System.Runtime]System.Array, int32)
+        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction`1::Invoke(!!T*)
+        ret
+    }
+    .method public hidebysig static void PinArray<T, TState>(class [System.Runtime]System.Array o, !!TState state, class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState> callback) cil managed {
+        .locals (
+            class [System.Runtime]System.Array pinned pinnedObj
+        )
+        
+        ldarg o
+        stloc pinnedObj
+        ldarg callback
+        ldloc pinnedObj
+        ldc.i4.0
+        call native int [System.Runtime]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [System.Runtime]System.Array, int32)
+        ldarg state
+        callvirt instance void ScopedObjectPin.IlHelpers.StatefulPtrAction`2::Invoke(!!T*)
+        ret
+    }
+    .class nested public auto ansi sealed ByteBox extends [System.Runtime]System.Object {
+        .field public class [System.Runtime]System.Byte Data
+        .method public hidebysig specialname rtspecialname instance void .ctor() cil managed {
+            ldarg.0
+            call instance void [System.Runtime]System.Object::.ctor()
+            ret
+        }
+    }
+    .method public hidebysig static native int GetObjectDataOffset() cil managed {
+        .locals (
+            class ScopedObjectPin.IlHelpers.Helper/ByteBox pinned boxed
+        )
+        newobj instance void ScopedObjectPin.IlHelpers.Helper/ByteBox::.ctor()
+        stloc boxed
+        ldloc boxed
+        conv.u
+        ldloc boxed
+        ldflda class [System.Runtime]System.IntPtr ScopedObjectPin.IlHelpers.Helper/ByteBox::Data
+        conv.u
+        sub
         ret
     }
 }
