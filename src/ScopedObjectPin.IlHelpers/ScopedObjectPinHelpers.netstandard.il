@@ -7,7 +7,7 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
 
 .assembly ScopedObjectPin.IlHelpers {}
 
-.class public auto ansi sealed PtrAction extends [System.Runtime]System.MulticastDelegate {
+.class public auto ansi sealed ScopedObjectPin.IlHelpers.PtrAction extends [System.Runtime]System.MulticastDelegate {
     .method public hidebysig specialname rtspecialname instance void .ctor(object 'object', native int 'method') runtime managed {}
     .method public hidebysig newslot virtual instance void Invoke(void* p) runtime managed {}
     .method public hidebysig newslot virtual instance class [System.Runtime]System.IAsyncResult BeginInvoke (
