@@ -10,7 +10,7 @@
     <Version>1.0.0</Version>
     <Copyright>Copyright 2024 Windows10CE</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/Windows10CE/ScopedObjectPin</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Windows10CE/ScopedObjectPin</RepositoryUrl>
     <IncludeReferencedProjects>true</IncludeReferencedProjects>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
