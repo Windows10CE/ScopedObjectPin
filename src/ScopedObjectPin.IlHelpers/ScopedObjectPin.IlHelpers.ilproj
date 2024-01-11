@@ -5,14 +5,13 @@
         <Optimize>True</Optimize>
         <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
         <IsPackable>false</IsPackable>
+        <IlasmFlags>$(IlasmFlags) -INCLUDE=include\$(TargetFramework)</IlasmFlags>
     </PropertyGroup>
     
     <ItemGroup>
-        <Compile Include="ScopedObjectPinHelpers.netstandard.il" Condition="'$(TargetFramework)' == 'netstandard1.0'" />
-        <Compile Include="ScopedObjectPinHelpers.netfx11.il" Condition="'$(TargetFramework)' == 'net11'" />
-        <Compile Include="ScopedObjectPinHelpers.netfx20.il" Condition="'$(TargetFramework)' == 'net20'" />
+        <Compile Include="ScopedObjectPinHelpers.il" />
     </ItemGroup>
-
+    
     <PropertyGroup Condition="'$(TargetFramework)' == 'net11'">
         <DisableStandardFrameworkResolution>true</DisableStandardFrameworkResolution>
         <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
@@ -23,9 +22,5 @@
     
     <ItemGroup Condition="'$(TargetFramework)' == 'net11'">
         <ProjectReference Include="../mscorlib/mscorlib.csproj" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Content Include="ScopedObjectPinHelpers.netfx11.il" />
     </ItemGroup>
 </Project>
