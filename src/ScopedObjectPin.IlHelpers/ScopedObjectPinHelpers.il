@@ -16,7 +16,7 @@
 
 .class public auto ansi sealed ScopedObjectPin.IlHelpers.PtrAction extends [CORE_ASSEMBLY]System.MulticastDelegate {
     .method public hidebysig specialname rtspecialname instance void .ctor(class [CORE_ASSEMBLY]System.Object 'object', native int 'method') runtime managed {}
-    .method public hidebysig newslot virtual instance void Invoke(void* p) runtime managed {}
+    .method public hidebysig newslot virtual instance void Invoke(void* pointer) runtime managed {}
     .method public hidebysig newslot virtual instance class [CORE_ASSEMBLY]System.IAsyncResult BeginInvoke (
         void* pointer,
         class [CORE_ASSEMBLY]System.AsyncCallback callback,
@@ -28,9 +28,9 @@
 #ifndef NET11
 .class public auto ansi sealed ScopedObjectPin.IlHelpers.PtrAction`1<T> extends [CORE_ASSEMBLY]System.MulticastDelegate {
     .method public hidebysig specialname rtspecialname instance void .ctor(class [CORE_ASSEMBLY]System.Object 'object', native int 'method') runtime managed {}
-    .method public hidebysig newslot virtual instance void Invoke(!T* p) runtime managed {}
+    .method public hidebysig newslot virtual instance void Invoke(!T* pointer) runtime managed {}
     .method public hidebysig newslot virtual instance class [CORE_ASSEMBLY]System.IAsyncResult BeginInvoke (
-        !T* p,
+        !T* pointer,
         class [CORE_ASSEMBLY]System.AsyncCallback callback,
         class [CORE_ASSEMBLY]System.Object 'object'
     ) runtime managed {}
@@ -39,9 +39,9 @@
 
 .class public auto ansi sealed ScopedObjectPin.IlHelpers.StatefulPtrAction`2<T, TState> extends [CORE_ASSEMBLY]System.MulticastDelegate {
     .method public hidebysig specialname rtspecialname instance void .ctor(class [CORE_ASSEMBLY]System.Object 'object', native int 'method') runtime managed {}
-    .method public hidebysig newslot virtual instance void Invoke(!T* p, !TState state) runtime managed {}
+    .method public hidebysig newslot virtual instance void Invoke(!T* pointer, !TState state) runtime managed {}
     .method public hidebysig newslot virtual instance class [CORE_ASSEMBLY]System.IAsyncResult BeginInvoke (
-        !T* p,
+        !T* pointer,
         !TState state,
         class [CORE_ASSEMBLY]System.AsyncCallback callback,
         class [CORE_ASSEMBLY]System.Object 'object'
