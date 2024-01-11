@@ -12,7 +12,8 @@
         <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
         <NoStdLib>true</NoStdLib>
         <NoConfig>true</NoConfig>
-        
+        <NoWarn>CS8021</NoWarn>
+
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 </Project>
