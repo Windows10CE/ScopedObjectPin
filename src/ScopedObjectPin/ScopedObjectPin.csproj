@@ -1,5 +1,4 @@
-﻿<Project>
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net11;net20;net45;netstandard1.0;netstandard1.1</TargetFrameworks>
     <Nullable>enable</Nullable>
@@ -17,16 +16,13 @@
     <Description>Allows you to pin an arbitrary object (or its data) during the execution of a given delegate.</Description>
   </PropertyGroup>
   
-  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
-  
   <PropertyGroup Condition="'$(TargetFramework)' == 'net11'">
+    <DisableStandardFrameworkResolution>true</DisableStandardFrameworkResolution>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <DisableTransitiveFrameworkReferenceDownloads>true</DisableTransitiveFrameworkReferenceDownloads>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
   </PropertyGroup>
-  
-  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   
   <ItemGroup>
     <ProjectReference Include="../ScopedObjectPin.IlHelpers/ScopedObjectPin.IlHelpers.ilproj" PrivateAssets="all" />
@@ -48,7 +44,4 @@
       <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
     </ItemGroup>
   </Target>
-
-  <Import Condition="'$(TargetFramework)' == 'net11'" Project="../../util/DisableResolveFramework.proj" />
-
 </Project>

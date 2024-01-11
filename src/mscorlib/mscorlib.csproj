@@ -1,6 +1,7 @@
-﻿<Project>
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net11</TargetFramework>
+        <DisableStandardFrameworkResolution>true</DisableStandardFrameworkResolution>
         
         <LangVersion>12</LangVersion>
         <RootNamespace>System</RootNamespace>
@@ -11,13 +12,8 @@
         <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
         <NoStdLib>true</NoStdLib>
         <NoConfig>true</NoConfig>
-        
+        <NoWarn>CS8021</NoWarn>
+
         <IsPackable>false</IsPackable>
     </PropertyGroup>
-    
-    <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
-    <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
-
-    <Import Project="../../util/DisableResolveFramework.proj" />
-    
 </Project>

@@ -1,21 +1,19 @@
-<Project>
+<Project Sdk="Microsoft.NET.Sdk.IL/8.0.0">
     <PropertyGroup>
         <TargetFrameworks>net11;net20;netstandard1.0</TargetFrameworks>
         <DebugType>PdbOnly</DebugType>
         <Optimize>True</Optimize>
         <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
         <IsPackable>false</IsPackable>
+        <IlasmFlags>$(IlasmFlags) -INCLUDE=include\$(TargetFramework)</IlasmFlags>
     </PropertyGroup>
     
     <ItemGroup>
-        <Compile Include="ScopedObjectPinHelpers.netstandard.il" Condition="'$(TargetFramework)' == 'netstandard1.0'" />
-        <Compile Include="ScopedObjectPinHelpers.netfx11.il" Condition="'$(TargetFramework)' == 'net11'" />
-        <Compile Include="ScopedObjectPinHelpers.netfx20.il" Condition="'$(TargetFramework)' == 'net20'" />
+        <Compile Include="ScopedObjectPinHelpers.il" />
     </ItemGroup>
     
-    <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk.IL" Version="8.0.0" />
-
     <PropertyGroup Condition="'$(TargetFramework)' == 'net11'">
+        <DisableStandardFrameworkResolution>true</DisableStandardFrameworkResolution>
         <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
         <DisableTransitiveFrameworkReferenceDownloads>true</DisableTransitiveFrameworkReferenceDownloads>
         <NoStdLib>true</NoStdLib>
@@ -25,13 +23,4 @@
     <ItemGroup Condition="'$(TargetFramework)' == 'net11'">
         <ProjectReference Include="../mscorlib/mscorlib.csproj" />
     </ItemGroup>
-    
-    <ItemGroup>
-      <Content Include="ScopedObjectPinHelpers.netfx11.il" />
-    </ItemGroup>
-
-    <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk.IL" Version="8.0.0" />
-
-    <Import Condition="'$(TargetFramework)' == 'net11'" Project="../../util/DisableResolveFramework.proj" />
-    
 </Project>

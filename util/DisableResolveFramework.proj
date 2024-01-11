@@ -1,5 +1,0 @@
-<Project>
-    <Target Name="GetReferenceAssemblyPaths" Condition="'$(TargetFramework)' == 'net11'">
-        <!-- empty -->
-    </Target>
-</Project>
