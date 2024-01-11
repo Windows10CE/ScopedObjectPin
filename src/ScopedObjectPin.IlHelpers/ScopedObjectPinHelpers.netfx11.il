@@ -19,19 +19,6 @@
     .method public hidebysig newslot virtual instance void EndInvoke (class [mscorlib]System.IAsyncResult result) runtime managed {}
 }
 .class private auto ansi abstract sealed ScopedObjectPin.IlHelpers.Helper extends [mscorlib]System.Object {
-    .method public hidebysig static void PinObject(class [mscorlib]System.Object o, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
-        .locals (
-            class [mscorlib]System.Object pinned pinnedObj
-        )
-        
-        ldarg o
-        stloc pinnedObj
-        ldarg callback
-        ldloc pinnedObj
-        conv.u
-        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
-        ret
-    }
     .method public hidebysig static void PinObjectWithOffset(class [mscorlib]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
         .locals (
             class [mscorlib]System.Object pinned pinnedObj
@@ -62,7 +49,7 @@
         ret
     }
     .class nested public auto ansi sealed ByteBox extends [mscorlib]System.Object {
-        .field public class [mscorlib]System.Byte Data
+        .field public valuetype [mscorlib]System.Byte Data
         .method public hidebysig specialname rtspecialname instance void .ctor() cil managed {
             ldarg.0
             call instance void [mscorlib]System.Object::.ctor()
@@ -78,7 +65,7 @@
         ldloc boxed
         conv.u
         ldloc boxed
-        ldflda class [mscorlib]System.IntPtr ScopedObjectPin.IlHelpers.Helper/ByteBox::Data
+        ldflda valuetype [mscorlib]System.Byte ScopedObjectPin.IlHelpers.Helper/ByteBox::Data
         conv.u
         sub
         ret

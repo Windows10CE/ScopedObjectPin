@@ -20,7 +20,7 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
     .method public hidebysig specialname rtspecialname instance void .ctor(class [System.Runtime]System.Object 'object', native int 'method') runtime managed {}
     .method public hidebysig newslot virtual instance void Invoke(void* p) runtime managed {}
     .method public hidebysig newslot virtual instance class [System.Runtime]System.IAsyncResult BeginInvoke (
-        void* pointer,
+        void* p,
         class [System.Runtime]System.AsyncCallback callback,
         class [System.Runtime]System.Object 'object'
     ) runtime managed {}
@@ -48,19 +48,6 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
     .method public hidebysig newslot virtual instance void EndInvoke (class [System.Runtime]System.IAsyncResult result) runtime managed {}
 }
 .class private auto ansi abstract sealed ScopedObjectPin.IlHelpers.Helper extends [System.Runtime]System.Object {
-    .method public hidebysig static void PinObject(class [System.Runtime]System.Object o, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
-        .locals (
-            class [System.Runtime]System.Object pinned pinnedObj
-        )
-        
-        ldarg o
-        stloc pinnedObj
-        ldarg callback
-        ldloc pinnedObj
-        conv.u
-        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
-        ret
-    }
     .method public hidebysig static void PinObjectWithOffset(class [System.Runtime]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
         .locals (
             class [System.Runtime]System.Object pinned pinnedObj
@@ -153,7 +140,7 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
         ret
     }
     .class nested public auto ansi sealed ByteBox extends [System.Runtime]System.Object {
-        .field public class [System.Runtime]System.Byte Data
+        .field public valuetype [System.Runtime]System.Byte Data
         .method public hidebysig specialname rtspecialname instance void .ctor() cil managed {
             ldarg.0
             call instance void [System.Runtime]System.Object::.ctor()
@@ -167,9 +154,9 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
         newobj instance void ScopedObjectPin.IlHelpers.Helper/ByteBox::.ctor()
         stloc boxed
         ldloc boxed
+        ldflda valuetype [System.Runtime]System.Byte ScopedObjectPin.IlHelpers.Helper/ByteBox::Data
         conv.u
         ldloc boxed
-        ldflda class [System.Runtime]System.IntPtr ScopedObjectPin.IlHelpers.Helper/ByteBox::Data
         conv.u
         sub
         ret

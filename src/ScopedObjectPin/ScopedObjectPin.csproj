@@ -1,18 +1,20 @@
 ﻿<Project>
 
   <PropertyGroup>
-    <TargetFrameworks>net11;net20;netstandard1.0</TargetFrameworks>
+    <TargetFrameworks>net11;net20;net45;netstandard1.0;netstandard1.1</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>CS8500</NoWarn>
     
     <Authors>Windows10CE</Authors>
-    <Version>2.0.1</Version>
+    <Version>3.0.0</Version>
     <Copyright>Copyright 2024 Windows10CE</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Windows10CE/ScopedObjectPin</RepositoryUrl>
     <IncludeReferencedProjects>true</IncludeReferencedProjects>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Description>Allows you to pin an arbitrary object (or its data) during the execution of a given delegate.</Description>
   </PropertyGroup>
   
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
@@ -34,6 +36,10 @@
     <ProjectReference Include="../mscorlib/mscorlib.csproj" Private="false" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.1' OR '$(TargetFramework)' == 'net45'">
+    <PackageReference Include="System.Memory" Version="4.5.5" />
+  </ItemGroup>
+  
   <PropertyGroup>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>

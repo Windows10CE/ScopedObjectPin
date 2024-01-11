@@ -1,2 +1,2 @@
 # ScopedObjectPin
-Allows you to pin an arbitrary object during the execution of a given delegate.
+Allows you to pin an arbitrary object (or its data) during the execution of a given delegate.

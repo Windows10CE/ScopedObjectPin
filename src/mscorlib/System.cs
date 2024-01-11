@@ -8,11 +8,9 @@ namespace System
     public struct Void;
     public struct Byte;
     public struct Int32;
-    public struct IntPtr
-    {
-        public static explicit operator IntPtr(int i) => throw null;
-    }
+    public struct IntPtr;
     public struct Boolean;
+    public struct Char;
     public sealed class String;
     public abstract class Attribute;
     public abstract class Array;
@@ -62,5 +60,6 @@ namespace System
         public sealed class AssemblyTitleAttribute(string s) : Attribute;
         public sealed class AssemblyVersionAttribute(string s) : Attribute;
         public sealed class AssemblyCopyrightAttribute(string s) : Attribute;
+        public sealed class AssemblyDescriptionAttribute(string s) : Attribute;
     }
 }
