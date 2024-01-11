@@ -5,7 +5,11 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
 0f c4 96 3d 26 1c 8a 12 43 65 18 20 6d c0 93 34 4d 5a d2 93)
 }
 
-.assembly ScopedObjectPin.IlHelpers {}
+.assembly ScopedObjectPin.IlHelpers {
+    .custom instance void [System.Runtime]System.Runtime.CompilerServices.InternalsVisibleToAttribute::.ctor(string) = (
+        01 00 0f 53 63 6f 70 65 64 4f 62 6a 65 63 74 50 69 6e 00 00
+    )
+}
 
 .class private auto ansi '<Module>' extends class [System.Runtime]System.Object {}
 
@@ -40,7 +44,7 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
     ) runtime managed {}
     .method public hidebysig newslot virtual instance void EndInvoke (class [System.Runtime]System.IAsyncResult result) runtime managed {}
 }
-.class public auto ansi abstract sealed ScopedObjectPin.IlHelpers.Helper extends [System.Runtime]System.Object {
+.class private auto ansi abstract sealed ScopedObjectPin.IlHelpers.Helper extends [System.Runtime]System.Object {
     .method public hidebysig static void PinObject(class [System.Runtime]System.Object o, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
         .locals (
             class [System.Runtime]System.Object pinned pinnedObj

@@ -1,6 +1,10 @@
 .assembly extern mscorlib {}
 
-.assembly ScopedObjectPin.IlHelpers {}
+.assembly ScopedObjectPin.IlHelpers {
+    .custom instance void [mscorlib]System.Runtime.CompilerServices.InternalsVisibleToAttribute::.ctor(string) = (
+        01 00 0f 53 63 6f 70 65 64 4f 62 6a 65 63 74 50 69 6e 00 00
+    )
+}
 
 .class private auto ansi '<Module>' extends class [mscorlib]System.Object {}
 
@@ -14,7 +18,7 @@
     ) runtime managed {}
     .method public hidebysig newslot virtual instance void EndInvoke (class [mscorlib]System.IAsyncResult result) runtime managed {}
 }
-.class public auto ansi abstract sealed ScopedObjectPin.IlHelpers.Helper extends [mscorlib]System.Object {
+.class private auto ansi abstract sealed ScopedObjectPin.IlHelpers.Helper extends [mscorlib]System.Object {
     .method public hidebysig static void PinObject(class [mscorlib]System.Object o, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
         .locals (
             class [mscorlib]System.Object pinned pinnedObj

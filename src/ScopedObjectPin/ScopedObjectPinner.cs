@@ -4,7 +4,7 @@ using ScopedObjectPin.IlHelpers;
 
 namespace ScopedObjectPin;
 
-public static class ScopedObjectPinner
+public static unsafe class ScopedObjectPinner
 {
     public static void Pin(object o, PtrAction callback)
     {
@@ -19,10 +19,13 @@ public static class ScopedObjectPinner
         switch (o)
         {
             case string s:
-                Helper.PinObjectWithOffset(s, (IntPtr)RuntimeHelpers.OffsetToStringData, callback);
+                Helper.PinObjectWithOffset(s, StringDataOffset, callback);
                 break;
             case Array a:
                 Helper.PinArray(a, callback);
+                break;
+            case null:
+                callback(null);
                 break;
             default:
                 Helper.PinObjectWithOffset(o, ObjectDataOffset, callback);
@@ -41,6 +44,9 @@ public static class ScopedObjectPinner
             case Array a:
                 Helper.PinArray(a, callback);
                 break;
+            case null:
+                callback(null);
+                break;
             default:
                 Helper.PinObjectWithOffset(o, ObjectDataOffset, callback);
                 break;
@@ -55,6 +61,9 @@ public static class ScopedObjectPinner
                 break;
             case Array a:
                 Helper.PinArray(a, state, callback);
+                break;
+            case null:
+                callback(null, state);
                 break;
             default:
                 Helper.PinObjectWithOffset(o, state, ObjectDataOffset, callback);

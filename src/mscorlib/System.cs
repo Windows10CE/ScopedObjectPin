@@ -4,16 +4,14 @@ namespace System
 {
     public class Object;
     public abstract class ValueType;
-    public abstract class Enum;
+    public abstract class Enum : ValueType;
     public struct Void;
     public struct Byte;
     public struct Int32;
-
     public struct IntPtr
     {
         public static explicit operator IntPtr(int i) => throw null;
     }
-    public struct UIntPtr;
     public struct Boolean;
     public sealed class String;
     public abstract class Attribute;
