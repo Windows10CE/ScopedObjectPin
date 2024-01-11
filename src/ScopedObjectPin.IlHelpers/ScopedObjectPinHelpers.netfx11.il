@@ -29,7 +29,7 @@
         ldarg callback
         ldloc pinnedObj
         conv.u
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
         ret
     }
     .method public hidebysig static void PinObjectWithOffset(class [mscorlib]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
@@ -44,7 +44,7 @@
         conv.u
         ldarg offset
         add
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
         ret
     }
     .method public hidebysig static void PinArray(class [mscorlib]System.Array o, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
@@ -58,7 +58,7 @@
         ldloc pinnedObj
         ldc.i4.0
         call native int [mscorlib]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [mscorlib]System.Array, int32)
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
         ret
     }
     .class nested public auto ansi sealed ByteBox extends [mscorlib]System.Object {

@@ -22,7 +22,7 @@
     .method public hidebysig specialname rtspecialname instance void .ctor(class [mscorlib]System.Object 'object', native int 'method') runtime managed {}
     .method public hidebysig newslot virtual instance void Invoke(!T* p) runtime managed {}
     .method public hidebysig newslot virtual instance class [mscorlib]System.IAsyncResult BeginInvoke (
-        !T* pointer,
+        !T* p,
         class [mscorlib]System.AsyncCallback callback,
         class [mscorlib]System.Object 'object'
     ) runtime managed {}
@@ -32,7 +32,7 @@
     .method public hidebysig specialname rtspecialname instance void .ctor(class [mscorlib]System.Object 'object', native int 'method') runtime managed {}
     .method public hidebysig newslot virtual instance void Invoke(!T* p, !TState state) runtime managed {}
     .method public hidebysig newslot virtual instance class [mscorlib]System.IAsyncResult BeginInvoke (
-        !T* pointer,
+        !T* p,
         !TState state,
         class [mscorlib]System.AsyncCallback callback,
         class [mscorlib]System.Object 'object'
@@ -50,7 +50,7 @@
         ldarg callback
         ldloc pinnedObj
         conv.u
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
         ret
     }
     .method public hidebysig static void PinObjectWithOffset(class [mscorlib]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
@@ -65,7 +65,7 @@
         conv.u
         ldarg offset
         add
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
         ret
     }
     .method public hidebysig static void PinObjectWithOffset<T>(class [mscorlib]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction`1<!!T> callback) cil managed {
@@ -80,7 +80,7 @@
         conv.u
         ldarg offset
         add
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(!!T*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction`1<!!T>::Invoke(!0*)
         ret
     }
     .method public hidebysig static void PinObjectWithOffset<T, TState>(class [mscorlib]System.Object o, !!TState state, native int offset, class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState> callback) cil managed {
@@ -96,7 +96,7 @@
         ldarg offset
         add
         ldarg state
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(!!T*, !!TState)
+        callvirt instance void class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState>::Invoke(!0*, !1)
         ret
     }
     .method public hidebysig static void PinArray(class [mscorlib]System.Array o, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
@@ -110,7 +110,7 @@
         ldloc pinnedObj
         ldc.i4.0
         call native int [mscorlib]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [mscorlib]System.Array, int32)
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
         ret
     }
     .method public hidebysig static void PinArray<T>(class [mscorlib]System.Array o, class ScopedObjectPin.IlHelpers.PtrAction`1<!!T> callback) cil managed {
@@ -124,7 +124,8 @@
         ldloc pinnedObj
         ldc.i4.0
         call native int [mscorlib]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [mscorlib]System.Array, int32)
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(!!T*)
+        conv.u
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction`1<!!T>::Invoke(!0*)
         ret
     }
     .method public hidebysig static void PinArray<T, TState>(class [mscorlib]System.Array o, !!TState state, class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState> callback) cil managed {
@@ -138,8 +139,9 @@
         ldloc pinnedObj
         ldc.i4.0
         call native int [mscorlib]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [mscorlib]System.Array, int32)
+        conv.u
         ldarg state
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(!!T*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState>::Invoke(!0*, !1)
         ret
     }
     .class nested public auto ansi sealed ByteBox extends [mscorlib]System.Object {

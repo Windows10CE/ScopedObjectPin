@@ -4,6 +4,9 @@
 dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29 e8 32 0e 92 ea 05 ec e4 e8 21 c0 a5 ef e8 f1 64 5c 4c 0c 93 c1 ab 99 28 5d 62 2c aa 65 2c 1d fa d6 3d 74 5d 6f 2d e5 f1 7e 5e af 
 0f c4 96 3d 26 1c 8a 12 43 65 18 20 6d c0 93 34 4d 5a d2 93)
 }
+.assembly extern System.Runtime.InteropServices {
+    .ver 4:0:0:0
+}
 
 .assembly ScopedObjectPin.IlHelpers {
     .custom instance void [System.Runtime]System.Runtime.CompilerServices.InternalsVisibleToAttribute::.ctor(string) = (
@@ -27,7 +30,7 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
     .method public hidebysig specialname rtspecialname instance void .ctor(class [System.Runtime]System.Object 'object', native int 'method') runtime managed {}
     .method public hidebysig newslot virtual instance void Invoke(!T* p) runtime managed {}
     .method public hidebysig newslot virtual instance class [System.Runtime]System.IAsyncResult BeginInvoke (
-        !T* pointer,
+        !T* p,
         class [System.Runtime]System.AsyncCallback callback,
         class [System.Runtime]System.Object 'object'
     ) runtime managed {}
@@ -37,7 +40,7 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
     .method public hidebysig specialname rtspecialname instance void .ctor(class [System.Runtime]System.Object 'object', native int 'method') runtime managed {}
     .method public hidebysig newslot virtual instance void Invoke(!T* p, !TState state) runtime managed {}
     .method public hidebysig newslot virtual instance class [System.Runtime]System.IAsyncResult BeginInvoke (
-        !T* pointer,
+        !T* p,
         !TState state,
         class [System.Runtime]System.AsyncCallback callback,
         class [System.Runtime]System.Object 'object'
@@ -55,7 +58,7 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
         ldarg callback
         ldloc pinnedObj
         conv.u
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
         ret
     }
     .method public hidebysig static void PinObjectWithOffset(class [System.Runtime]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
@@ -70,7 +73,7 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
         conv.u
         ldarg offset
         add
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
         ret
     }
     .method public hidebysig static void PinObjectWithOffset<T>(class [System.Runtime]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction`1<!!T> callback) cil managed {
@@ -85,7 +88,7 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
         conv.u
         ldarg offset
         add
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction`1::Invoke(!!T*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction`1<!!T>::Invoke(!0*)
         ret
     }
     .method public hidebysig static void PinObjectWithOffset<T, TState>(class [System.Runtime]System.Object o, !!TState state, native int offset, class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState> callback) cil managed {
@@ -101,7 +104,7 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
         ldarg offset
         add
         ldarg state
-        callvirt instance void ScopedObjectPin.IlHelpers.StatefulPtrAction`2::Invoke(!!T*, !!TState)
+        callvirt instance void class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState>::Invoke(!0*, !1)
         ret
     }
     .method public hidebysig static void PinArray(class [System.Runtime]System.Array o, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
@@ -114,8 +117,8 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
         ldarg callback
         ldloc pinnedObj
         ldc.i4.0
-        call native int [System.Runtime]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [System.Runtime]System.Array, int32)
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
+        call native int [System.Runtime.InteropServices]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [System.Runtime]System.Array, int32)
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction::Invoke(void*)
         ret
     }
     .method public hidebysig static void PinArray<T>(class [System.Runtime]System.Array o, class ScopedObjectPin.IlHelpers.PtrAction`1<!!T> callback) cil managed {
@@ -128,8 +131,9 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
         ldarg callback
         ldloc pinnedObj
         ldc.i4.0
-        call native int [System.Runtime]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [System.Runtime]System.Array, int32)
-        callvirt instance void ScopedObjectPin.IlHelpers.PtrAction`1::Invoke(!!T*)
+        call native int [System.Runtime.InteropServices]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [System.Runtime]System.Array, int32)
+        conv.u
+        callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction`1<!!T>::Invoke(!0*)
         ret
     }
     .method public hidebysig static void PinArray<T, TState>(class [System.Runtime]System.Array o, !!TState state, class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState> callback) cil managed {
@@ -142,9 +146,10 @@ dc c1 dd 9a d2 36 13 21 02 90 0b 72 3c f9 80 95 7f c4 e1 77 10 8f c6 07 77 4f 29
         ldarg callback
         ldloc pinnedObj
         ldc.i4.0
-        call native int [System.Runtime]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [System.Runtime]System.Array, int32)
+        call native int [System.Runtime.InteropServices]System.Runtime.InteropServices.Marshal::UnsafeAddrOfPinnedArrayElement(class [System.Runtime]System.Array, int32)
+        conv.u
         ldarg state
-        callvirt instance void ScopedObjectPin.IlHelpers.StatefulPtrAction`2::Invoke(!!T*)
+        callvirt instance void class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState>::Invoke(!0*, !1)
         ret
     }
     .class nested public auto ansi sealed ByteBox extends [System.Runtime]System.Object {
