@@ -6,11 +6,6 @@ namespace ScopedObjectPin;
 
 public static unsafe class Pin
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="o"></param>
-    /// <param name="callback"></param>
     public static void Handle(object o, PtrAction callback)
     {
         Helper.PinObjectWithOffset(o, default, callback);
