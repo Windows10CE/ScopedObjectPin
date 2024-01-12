@@ -1,6 +1,7 @@
 #define CORE_ASSEMBLY "System.Runtime"
 #define INTEROP_SERVICES "System.Runtime.InteropServices"
 #define NETSTANDARD ""
+#define HELPER_ACCESS "private"
 
 .assembly extern CORE_ASSEMBLY
 {

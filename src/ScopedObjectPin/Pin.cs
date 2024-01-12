@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using ScopedObjectPin.IlHelpers;
 
 namespace ScopedObjectPin;
 
+// ReSharper disable UnusedType.Global
+// ReSharper disable UnusedMember.Global
 public static unsafe class Pin
 {
     public static void Handle(object o, PtrAction callback)
@@ -86,6 +87,7 @@ public static unsafe class Pin
                 break;
         }
     }
+
     public static void Array<T>(T[]? a, PtrAction<T> callback)
     {
         fixed (T* p = a)
@@ -102,6 +104,22 @@ public static unsafe class Pin
         }
     }
 
+    public static void Array<T>(Array? a, PtrAction<T> callback)
+    {
+        if (a is null)
+            callback(null);
+        else
+            Helper.PinArray(a, callback);
+    }
+
+    public static void Array<T, TState>(Array? a, TState state, StatefulPtrAction<T, TState> callback)
+    {
+        if (a is null)
+            callback(null, state);
+        else
+            Helper.PinArray(a, state, callback);
+    }
+
     public static void String(string? s, PtrAction<char> callback)
     {
         fixed (char* p = s)
@@ -115,6 +133,22 @@ public static unsafe class Pin
         fixed (char* p = s)
         {
             callback(p, state);
+        }
+    }
+    
+    public static void String<T>(string? s, PtrAction<T> callback)
+    {
+        fixed (char* p = s)
+        {
+            callback((T*)p);
+        }
+    }
+
+    public static void String<T, TState>(string? s, TState state, StatefulPtrAction<T, TState> callback)
+    {
+        fixed (char* p = s)
+        {
+            callback((T*)p, state);
         }
     }
 #endif

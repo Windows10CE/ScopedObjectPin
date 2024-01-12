@@ -5,7 +5,7 @@
         <Optimize>True</Optimize>
         <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
         <IsPackable>false</IsPackable>
-        <IlasmFlags>$(IlasmFlags) -INCLUDE=include\$(TargetFramework)</IlasmFlags>
+        <IlasmFlags>$(IlasmFlags) -INCLUDE=include/$(TargetFramework)</IlasmFlags>
     </PropertyGroup>
     
     <ItemGroup>

@@ -5,9 +5,11 @@
 #endif
 
 .assembly ScopedObjectPin.IlHelpers {
+#ifndef NET11
     .custom instance void [CORE_ASSEMBLY]System.Runtime.CompilerServices.InternalsVisibleToAttribute::.ctor(string) = (
         01 00 0f 53 63 6f 70 65 64 4f 62 6a 65 63 74 50 69 6e 00 00
     )
+#endif
 }
 
 .class private auto ansi '<Module>' extends class [CORE_ASSEMBLY]System.Object
@@ -50,8 +52,8 @@
 }
 #endif
 
-.class private auto ansi abstract sealed ScopedObjectPin.IlHelpers.Helper extends [CORE_ASSEMBLY]System.Object {
-    .method public hidebysig static void PinObjectWithOffset(class [CORE_ASSEMBLY]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
+.class HELPER_ACCESS auto ansi abstract sealed ScopedObjectPin.IlHelpers.Helper extends [CORE_ASSEMBLY]System.Object {
+    .method public hidebysig static void PinObjectWithOffset(class [CORE_ASSEMBLY]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed aggressiveinlining {
         .locals (
             class [CORE_ASSEMBLY]System.Object pinned pinnedObj
         )
@@ -67,7 +69,7 @@
         ret
     }
 #ifndef NET11
-    .method public hidebysig static void PinObjectWithOffset<T>(class [CORE_ASSEMBLY]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction`1<!!T> callback) cil managed {
+    .method public hidebysig static void PinObjectWithOffset<T>(class [CORE_ASSEMBLY]System.Object o, native int offset, class ScopedObjectPin.IlHelpers.PtrAction`1<!!T> callback) cil managed aggressiveinlining {
         .locals (
             class [CORE_ASSEMBLY]System.Object pinned pinnedObj
         )
@@ -82,7 +84,7 @@
         callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction`1<!!T>::Invoke(!0*)
         ret
     }
-    .method public hidebysig static void PinObjectWithOffset<T, TState>(class [CORE_ASSEMBLY]System.Object o, !!TState state, native int offset, class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState> callback) cil managed {
+    .method public hidebysig static void PinObjectWithOffset<T, TState>(class [CORE_ASSEMBLY]System.Object o, !!TState state, native int offset, class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState> callback) cil managed aggressiveinlining {
         .locals (
             class [CORE_ASSEMBLY]System.Object pinned pinnedObj
         )
@@ -99,7 +101,7 @@
         ret
     }
 #endif
-    .method public hidebysig static void PinArray(class [CORE_ASSEMBLY]System.Array o, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed {
+    .method public hidebysig static void PinArray(class [CORE_ASSEMBLY]System.Array o, class ScopedObjectPin.IlHelpers.PtrAction callback) cil managed aggressiveinlining {
         .locals (
             class [CORE_ASSEMBLY]System.Array pinned pinnedObj
         )
@@ -114,7 +116,7 @@
         ret
     }
 #ifndef NET11
-    .method public hidebysig static void PinArray<T>(class [CORE_ASSEMBLY]System.Array o, class ScopedObjectPin.IlHelpers.PtrAction`1<!!T> callback) cil managed {
+    .method public hidebysig static void PinArray<T>(class [CORE_ASSEMBLY]System.Array o, class ScopedObjectPin.IlHelpers.PtrAction`1<!!T> callback) cil managed aggressiveinlining {
         .locals (
             class [CORE_ASSEMBLY]System.Array pinned pinnedObj
         )
@@ -129,7 +131,7 @@
         callvirt instance void class ScopedObjectPin.IlHelpers.PtrAction`1<!!T>::Invoke(!0*)
         ret
     }
-    .method public hidebysig static void PinArray<T, TState>(class [CORE_ASSEMBLY]System.Array o, !!TState state, class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState> callback) cil managed {
+    .method public hidebysig static void PinArray<T, TState>(class [CORE_ASSEMBLY]System.Array o, !!TState state, class ScopedObjectPin.IlHelpers.StatefulPtrAction`2<!!T, !!TState> callback) cil managed aggressiveinlining {
         .locals (
             class [CORE_ASSEMBLY]System.Array pinned pinnedObj
         )

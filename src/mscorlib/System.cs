@@ -51,7 +51,6 @@ namespace System
 
     namespace Reflection
     {
-        public abstract class Type;
         public sealed class AssemblyCompanyAttribute(string s) : Attribute;
         public sealed class AssemblyConfigurationAttribute(string s) : Attribute;
         public sealed class AssemblyFileVersionAttribute(string s) : Attribute;
