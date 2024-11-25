@@ -1,18 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk.IL/8.0.0">
+<Project Sdk="Microsoft.NET.Sdk.IL/9.0.0">
     <PropertyGroup>
-        <TargetFrameworks>net11;net20;netstandard1.0</TargetFrameworks>
+        <TargetFrameworks>net10;net20;netstandard1.0;net9.0</TargetFrameworks>
         <DebugType>PdbOnly</DebugType>
         <Optimize>True</Optimize>
         <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
         <IsPackable>false</IsPackable>
         <IlasmFlags>$(IlasmFlags) -INCLUDE=include/$(TargetFramework)</IlasmFlags>
+        <NoWarn>NETSDK1215,NU1903</NoWarn>
     </PropertyGroup>
     
     <ItemGroup>
         <Compile Include="ScopedObjectPinHelpers.il" />
     </ItemGroup>
     
-    <PropertyGroup Condition="'$(TargetFramework)' == 'net11'">
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net10'">
         <DisableStandardFrameworkResolution>true</DisableStandardFrameworkResolution>
         <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
         <DisableTransitiveFrameworkReferenceDownloads>true</DisableTransitiveFrameworkReferenceDownloads>
@@ -20,7 +21,11 @@
         <NoConfig>true</NoConfig>
     </PropertyGroup>
     
-    <ItemGroup Condition="'$(TargetFramework)' == 'net11'">
+    <ItemGroup Condition="'$(TargetFramework)' == 'net10'">
         <ProjectReference Include="../mscorlib/mscorlib.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="include\net9.0\" />
     </ItemGroup>
 </Project>

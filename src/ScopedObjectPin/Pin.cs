@@ -3,8 +3,6 @@ using ScopedObjectPin.IlHelpers;
 
 namespace ScopedObjectPin;
 
-// ReSharper disable UnusedType.Global
-// ReSharper disable UnusedMember.Global
 public static unsafe class Pin
 {
     public static void Handle(object o, PtrAction callback)
@@ -44,8 +42,11 @@ public static unsafe class Pin
             Helper.PinArray(a, callback);
     }
 
-#if NETSTANDARD1_0_OR_GREATER || NET20_OR_GREATER // generic APIs
+#if NETSTANDARD1_0_OR_GREATER || NET20_OR_GREATER || NETCOREAPP1_0_OR_GREATER // generic APIs
     public static void Object<T>(object? o, PtrAction<T> callback)
+#if NET9_0_OR_GREATER
+        where T : allows ref struct
+#endif
     {
         switch (o)
         {
@@ -67,6 +68,10 @@ public static unsafe class Pin
         }
     }
     public static void Object<T, TState>(object? o, TState state, StatefulPtrAction<T, TState> callback)
+#if NET9_0_OR_GREATER
+        where T : allows ref struct
+        where TState : allows ref struct
+#endif
     {
         switch (o)
         {
@@ -97,6 +102,9 @@ public static unsafe class Pin
     }
 
     public static void Array<T, TState>(T[]? a, TState state, StatefulPtrAction<T, TState> callback)
+#if NET9_0_OR_GREATER
+        where TState : allows ref struct
+#endif
     {
         fixed (T* p = a)
         {
@@ -105,6 +113,9 @@ public static unsafe class Pin
     }
 
     public static void Array<T>(Array? a, PtrAction<T> callback)
+#if NET9_0_OR_GREATER
+        where T : allows ref struct
+#endif
     {
         if (a is null)
             callback(null);
@@ -113,6 +124,10 @@ public static unsafe class Pin
     }
 
     public static void Array<T, TState>(Array? a, TState state, StatefulPtrAction<T, TState> callback)
+#if NET9_0_OR_GREATER
+        where T : allows ref struct
+        where TState : allows ref struct
+#endif
     {
         if (a is null)
             callback(null, state);
@@ -129,6 +144,9 @@ public static unsafe class Pin
     }
 
     public static void String<TState>(string? s, TState state, StatefulPtrAction<char, TState> callback)
+#if NET9_0_OR_GREATER
+        where TState : allows ref struct
+#endif
     {
         fixed (char* p = s)
         {
@@ -137,6 +155,9 @@ public static unsafe class Pin
     }
     
     public static void String<T>(string? s, PtrAction<T> callback)
+#if NET9_0_OR_GREATER
+        where T : allows ref struct
+#endif
     {
         fixed (char* p = s)
         {
@@ -145,6 +166,10 @@ public static unsafe class Pin
     }
 
     public static void String<T, TState>(string? s, TState state, StatefulPtrAction<T, TState> callback)
+#if NET9_0_OR_GREATER
+        where T : allows ref struct
+        where TState : allows ref struct
+#endif
     {
         fixed (char* p = s)
         {
@@ -152,7 +177,7 @@ public static unsafe class Pin
         }
     }
 #endif
-#if NETSTANDARD1_1 || NET45
+#if NETSTANDARD1_1 || NET45 || NETCOREAPP1_0_OR_GREATER
     public static void Span<T>(ReadOnlySpan<T> s, PtrAction<T> callback)
     {
         fixed (T* p = s)
@@ -162,6 +187,9 @@ public static unsafe class Pin
     }
     
     public static void Span<T, TState>(ReadOnlySpan<T> s, TState state, StatefulPtrAction<T, TState> callback)
+#if NET9_0_OR_GREATER
+        where TState : allows ref struct
+#endif
     {
         fixed (T* p = s)
         {

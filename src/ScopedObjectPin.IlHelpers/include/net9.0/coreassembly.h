@@ -2,11 +2,11 @@
 #define INTEROP_SERVICES "System.Runtime.InteropServices"
 #define NETSTANDARD ""
 #define HELPER_ACCESS "private"
-#define BYREFLIKE ""
+#define BYREFLIKE "byreflike"
 
 .assembly extern CORE_ASSEMBLY
 {
-    .ver 4:0:0:0
+    .ver 9:0:0:0
     .publickey = (00 24 00 00 04 80 00 00 94 00 00 00 06 02 00 00 00 24 00 00
                   52 53 41 31 00 04 00 00 01 00 01 00 07 d1 fa 57 c4 ae d9 f0
                   a3 2e 84 aa 0f ae fd 0d e9 e8 fd 6a ec 8f 87 fb 03 76 6c 83
@@ -17,4 +17,4 @@
                   0f c4 96 3d 26 1c 8a 12 43 65 18 20 6d c0 93 34 4d 5a d2 93)
 }
 
-.assembly extern INTEROP_SERVICES { .ver 4:0:0:0 }
+.assembly extern INTEROP_SERVICES { .ver 9:0:0:0 }
