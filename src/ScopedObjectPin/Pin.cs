@@ -1,16 +1,69 @@
 ﻿using System;
+#if !NET10
+using System.Runtime.InteropServices;
+#endif
 using ScopedObjectPin.IlHelpers;
 
 namespace ScopedObjectPin;
 
-public static unsafe class Pin
+public static unsafe partial class Pin
 {
-    public static void Handle(object o, PtrAction callback)
+#if NET10_0_OR_GREATER
+    private struct TempPinHolder : IDisposable
     {
-        Helper.PinObjectWithOffset(o, default, callback);
-    }
+        private readonly PinnedGCHandle<object?>? _handle;
+        private bool _disposed;
 
-    private static readonly IntPtr ObjectDataOffset = Helper.GetObjectDataOffset();
+        [ThreadStatic]
+        private static PinnedGCHandle<object?> _staticHandle;
+
+        public PinnedGCHandle<object?> GCHandle => _handle ?? _staticHandle;
+        
+        internal TempPinHolder(object? o)
+        {
+            switch (_staticHandle)
+            {
+                case { IsAllocated: true, Target: null }:
+                    _staticHandle.Target = o;
+                    break;
+                case { IsAllocated: true }:
+                    _handle = new PinnedGCHandle<object?>(o);
+                    break;
+                case { IsAllocated: false }:
+                    _staticHandle = new PinnedGCHandle<object?>(o);
+                    break;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_disposed) return;
+            _disposed = true;
+
+            if (_handle is { } handle)
+            {
+                handle.Dispose();
+            }
+            else
+            {
+                _staticHandle.Target = null;
+            }
+        }
+
+    }
+#else
+    private static readonly nint ObjectDataOffset = Helper.GetObjectDataOffset();
+#endif
+    
+    public static void Handle(object? o, PtrAction callback)
+    {
+#if NET10_0_OR_GREATER
+        using var handle = new TempPinHolder(o);
+        callback((void*)PinnedGCHandle<object?>.ToIntPtr(handle.GCHandle));
+#else
+        Helper.PinObjectWithOffset(o, default, callback);
+#endif
+    }
 
     public static void Object(object? o, PtrAction callback)
     {
@@ -22,179 +75,47 @@ public static unsafe class Pin
                     callback(p);
                 }
                 break;
-            case Array a:
-                Helper.PinArray(a, callback);
-                break;
             case null:
                 callback(null);
+                break;
+#if NET10_0_OR_GREATER
+            case Array a:
+                using (var handle = new TempPinHolder(a))
+                {
+                    callback((void*)Marshal.UnsafeAddrOfPinnedArrayElement(a, 0));
+                }
+                break;
+            default:
+                using (var handle = new TempPinHolder(o))
+                {
+                    callback(handle.GCHandle.GetAddressOfObjectData());
+                }
+                break;
+#else
+            case Array a:
+                Helper.PinArray(a, callback);
                 break;
             default:
                 Helper.PinObjectWithOffset(o, ObjectDataOffset, callback);
                 break;
+#endif
         }
     }
 
     public static void Array(Array? a, PtrAction callback)
     {
         if (a is null)
+        {
             callback(null);
+        }
         else
+        {
+#if NET10_0_OR_GREATER
+            using var handle = new TempPinHolder(a);
+            callback((void*)Marshal.UnsafeAddrOfPinnedArrayElement(a, 0));
+#else
             Helper.PinArray(a, callback);
-    }
-
-#if NETSTANDARD1_0_OR_GREATER || NET20_OR_GREATER || NETCOREAPP1_0_OR_GREATER // generic APIs
-    public static void Object<T>(object? o, PtrAction<T> callback)
-#if NET9_0_OR_GREATER
-        where T : allows ref struct
 #endif
-    {
-        switch (o)
-        {
-            case string s:
-                fixed (char* p = s)
-                {
-                    callback((T*)p);
-                }
-                break;
-            case Array a:
-                Helper.PinArray(a, callback);
-                break;
-            case null:
-                callback(null);
-                break;
-            default:
-                Helper.PinObjectWithOffset(o, ObjectDataOffset, callback);
-                break;
         }
     }
-    public static void Object<T, TState>(object? o, TState state, StatefulPtrAction<T, TState> callback)
-#if NET9_0_OR_GREATER
-        where T : allows ref struct
-        where TState : allows ref struct
-#endif
-    {
-        switch (o)
-        {
-            case string s:
-                fixed (char* p = s)
-                {
-                    callback((T*)p, state);
-                }
-                break;
-            case Array a:
-                Helper.PinArray(a, state, callback);
-                break;
-            case null:
-                callback(null, state);
-                break;
-            default:
-                Helper.PinObjectWithOffset(o, state, ObjectDataOffset, callback);
-                break;
-        }
-    }
-
-    public static void Array<T>(T[]? a, PtrAction<T> callback)
-    {
-        fixed (T* p = a)
-        {
-            callback(p);
-        }
-    }
-
-    public static void Array<T, TState>(T[]? a, TState state, StatefulPtrAction<T, TState> callback)
-#if NET9_0_OR_GREATER
-        where TState : allows ref struct
-#endif
-    {
-        fixed (T* p = a)
-        {
-            callback(p, state);
-        }
-    }
-
-    public static void Array<T>(Array? a, PtrAction<T> callback)
-#if NET9_0_OR_GREATER
-        where T : allows ref struct
-#endif
-    {
-        if (a is null)
-            callback(null);
-        else
-            Helper.PinArray(a, callback);
-    }
-
-    public static void Array<T, TState>(Array? a, TState state, StatefulPtrAction<T, TState> callback)
-#if NET9_0_OR_GREATER
-        where T : allows ref struct
-        where TState : allows ref struct
-#endif
-    {
-        if (a is null)
-            callback(null, state);
-        else
-            Helper.PinArray(a, state, callback);
-    }
-
-    public static void String(string? s, PtrAction<char> callback)
-    {
-        fixed (char* p = s)
-        {
-            callback(p);
-        }
-    }
-
-    public static void String<TState>(string? s, TState state, StatefulPtrAction<char, TState> callback)
-#if NET9_0_OR_GREATER
-        where TState : allows ref struct
-#endif
-    {
-        fixed (char* p = s)
-        {
-            callback(p, state);
-        }
-    }
-    
-    public static void String<T>(string? s, PtrAction<T> callback)
-#if NET9_0_OR_GREATER
-        where T : allows ref struct
-#endif
-    {
-        fixed (char* p = s)
-        {
-            callback((T*)p);
-        }
-    }
-
-    public static void String<T, TState>(string? s, TState state, StatefulPtrAction<T, TState> callback)
-#if NET9_0_OR_GREATER
-        where T : allows ref struct
-        where TState : allows ref struct
-#endif
-    {
-        fixed (char* p = s)
-        {
-            callback((T*)p, state);
-        }
-    }
-#endif
-#if NETSTANDARD1_1 || NET45 || NETCOREAPP1_0_OR_GREATER
-    public static void Span<T>(ReadOnlySpan<T> s, PtrAction<T> callback)
-    {
-        fixed (T* p = s)
-        {
-            callback(p);
-        }
-    }
-    
-    public static void Span<T, TState>(ReadOnlySpan<T> s, TState state, StatefulPtrAction<T, TState> callback)
-#if NET9_0_OR_GREATER
-        where TState : allows ref struct
-#endif
-    {
-        fixed (T* p = s)
-        {
-            callback(p, state);
-        }
-    }
-#endif
 }

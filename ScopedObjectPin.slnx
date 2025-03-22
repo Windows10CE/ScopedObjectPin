@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/mscorlib/mscorlib.csproj" />
+  <Project Path="src/ScopedObjectPin.IlHelpers/ScopedObjectPin.IlHelpers.ilproj" Type="C#" />
+  <Project Path="src/ScopedObjectPin/ScopedObjectPin.csproj" />
+</Solution>

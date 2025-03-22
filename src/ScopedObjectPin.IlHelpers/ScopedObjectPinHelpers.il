@@ -35,7 +35,7 @@
     .method public hidebysig newslot virtual instance void EndInvoke (class [CORE_ASSEMBLY]System.IAsyncResult result) runtime managed {}
 }
 
-.class public auto ansi sealed ScopedObjectPin.IlHelpers.StatefulPtrAction`2<BYREFLIKE T, BYREFLIKE TState> extends [CORE_ASSEMBLY]System.MulticastDelegate {
+.class public auto ansi sealed ScopedObjectPin.IlHelpers.StatefulPtrAction`2<BYREFLIKE T, - BYREFLIKE TState> extends [CORE_ASSEMBLY]System.MulticastDelegate {
     .method public hidebysig specialname rtspecialname instance void .ctor(class [CORE_ASSEMBLY]System.Object 'object', native int 'method') runtime managed {}
     .method public hidebysig newslot virtual instance void Invoke(!T* pointer, !TState state) runtime managed {}
     .method public hidebysig newslot virtual instance class [CORE_ASSEMBLY]System.IAsyncResult BeginInvoke (

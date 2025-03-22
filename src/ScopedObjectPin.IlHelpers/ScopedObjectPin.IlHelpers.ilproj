@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.IL/9.0.0">
     <PropertyGroup>
-        <TargetFrameworks>net10;net20;netstandard1.0;net9.0</TargetFrameworks>
+        <TargetFrameworks>net10;net20;netstandard2.0;net9.0</TargetFrameworks>
         <DebugType>PdbOnly</DebugType>
         <Optimize>True</Optimize>
         <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -23,9 +23,5 @@
     
     <ItemGroup Condition="'$(TargetFramework)' == 'net10'">
         <ProjectReference Include="../mscorlib/mscorlib.csproj" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="include\net9.0\" />
     </ItemGroup>
 </Project>
